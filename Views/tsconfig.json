@@ -1,11 +1,29 @@
 {
+  "extends": ["@vue/tsconfig/tsconfig.dom.json", "@tsconfig/node18/tsconfig.json"],
+  // 指定需要编译文件 否则默认当前目录下除了exclude之外的所有.ts, .d.ts,.tsx 文件
+  "include": [
+    "src/config/env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "vite.config.*",
+    "src/*.vue"
+  ],
+  // 指定需要编译文件 否则默认当前目录下除了exclude之外的所有.ts, .d.ts,.tsx 文件
   "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "compilerOptions": {
+    // 只编译修改过的文件,这个时候会生成tsconfig.tsbuildinfo,下次编译的时候会进行对比只编译修改过的文件 
+    "incremental": true,
+    // 允许编译JS
+    "allowJs": true,
+    // Volar, 指定node、 ElementPlus全局组件类型
+    "types": ["node", "element-plus/global"],
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+    "module": "ESNext",
+    "moduleResolution": "node"
+  },
+
 }

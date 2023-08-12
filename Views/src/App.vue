@@ -1,85 +1,67 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
+<!-- 主页 -->
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <!-- 0级---最外层容器 -->
+  <div class="common-layout">
+    <!-- 1级---内容容器 -->
+    <el-container>
+      <!-- 
+        2级---头部
+          LOGO
+          页面导航
+          搜索框
+       -->
+      <el-header id="headerCard">
+        <p>{{ store }}</p>
+      </el-header>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <!-- 
+        2级---身体
+          侧边栏: 内容导航
+          主体: 主体内容(卡片形式)
+       -->
+      <el-container>
+        <!-- 
+          3级---侧边栏
+            内容导航
+         -->
+        <el-aside id="asideCard">
+          <RouterLink to="/">Home</RouterLink>
+        </el-aside>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+        <!-- 
+          3级---主体: 主体内容(卡片形式)
+         -->
+        <el-main id="mainCard">
+          <RouterView />
+        </el-main>
 
-  <RouterView />
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import { useCounterStore } from './stores/counter';
+
+let store = useCounterStore()
+store.count = 7
+store.increment()
+
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+#headerCard {
+  background: #e0e2c4;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+#asideCard {
+  width: 10%;
+  background: #ce9c9c;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+#mainCard {
+  background: #96d1ce;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
